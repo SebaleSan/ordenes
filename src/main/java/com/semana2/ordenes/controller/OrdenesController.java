@@ -9,8 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.semana2.ordenes.dto.IngresarOrdenRequestDTO;
 import com.semana2.ordenes.dto.OrdenesResponseDTO;
 import com.semana2.ordenes.service.OrdenesService;
+
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -48,11 +55,11 @@ public class OrdenesController {
 
 //consulta de estado
 
-// 	@GetMapping("/estado")
-// 	public ResponseEntity<String> consultaEstado(@RequestParam String id) {
+	@GetMapping("/estado")
+	public ResponseEntity<String> consultaEstado(@RequestParam String id) {
 
-// 		return ResponseEntity.ok(service.consultaEstado(id));
-// 	}
+		return ResponseEntity.ok(service.consultaEstado(id));
+	}
 
 
 // //consulta de estado por nombre cliente y fecha	
@@ -63,14 +70,40 @@ public class OrdenesController {
 // 		return ResponseEntity.ok(service.consultarOrdenFecha(cliente, fecha));
 // 	}
 // 
-@GetMapping("/buscar")
-public ResponseEntity<List<OrdenesResponseDTO>> buscar(
+	// @GetMapping("/buscar")
+	// public ResponseEntity<List<OrdenesResponseDTO>> buscar(
+	// 		@RequestParam(required = false) String id,
+	// 		@RequestParam(required = false) String cliente,
+	// 		@RequestParam(required = false) String fecha) {
+
+	// 	return ResponseEntity.ok(service.buscar(id, cliente, fecha));
+	// }
+
+//buscar una orden por el id, nombre, o fecha 	
+	@GetMapping("/buscar")
+	public ResponseEntity<?> buscar(
         @RequestParam(required = false) String id,
         @RequestParam(required = false) String cliente,
         @RequestParam(required = false) String fecha) {
 
+    if (id == null && cliente == null && fecha == null) {
+        return ResponseEntity.badRequest().body("Debe enviar al menos un parámetro de búsqueda");
+    }
+
     return ResponseEntity.ok(service.buscar(id, cliente, fecha));
-}
+	}
+
+	// Creacion de orden de compra
+	@PostMapping()
+	public ResponseEntity<?> ingresaOrden(@Valid @RequestBody IngresarOrdenRequestDTO request) {
+
+		OrdenesResponseDTO ingresa = service.crear(request);
+
+		return ResponseEntity.ok(ingresa);
+
+	}
+
+
 
 
     

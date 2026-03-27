@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.semana2.ordenes.dto.CrearOrdenRequestDTO;
+import com.semana2.ordenes.dto.IngresarOrdenRequestDTO;
 import com.semana2.ordenes.dto.OrdenesResponseDTO;
 
 @Service
@@ -47,7 +47,7 @@ public class OrdenesService {
 		return null;
 	}
 
-    public OrdenesResponseDTO crear(CrearOrdenRequestDTO request) {
+    public OrdenesResponseDTO crear(IngresarOrdenRequestDTO request) {
 
        int nuevoId = ordenes.size() + 1;
 
@@ -65,19 +65,19 @@ public class OrdenesService {
         return nuevaOrden;
     }
 
-    // public String consultaEstado(String id) {
+    public String consultaEstado(String id) {
 
-    //     for (OrdenesResponseDTO orden : ordenes) 
-    //      {
+        for (OrdenesResponseDTO orden : ordenes) 
+         {
 
-    //          if (orden.getId().equals(id)) {
-    //              return String.format("El estado de la orden es: %s", orden.getEstado());
+             if (orden.getId().equals(id)) {
+                 return String.format("El estado de la orden es: %s", orden.getEstado());
                 
-    //          }
-    //     }
+             }
+        }
 
-    //         return "El Id de orden no existe";
-    // }
+            return "El Id de orden no existe";
+    }
 
     // public List<OrdenesResponseDTO> consultarOrdenFecha(String cliente, String fecha) {
 
