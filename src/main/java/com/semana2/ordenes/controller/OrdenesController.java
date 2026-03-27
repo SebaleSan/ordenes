@@ -81,16 +81,23 @@ public class OrdenesController {
 
 //buscar una orden por el id, nombre, o fecha 	
 	@GetMapping("/buscar")
-	public ResponseEntity<?> buscar(
+public ResponseEntity<?> buscar(
         @RequestParam(required = false) String id,
         @RequestParam(required = false) String cliente,
         @RequestParam(required = false) String fecha) {
 
     if (id == null && cliente == null && fecha == null) {
-        return ResponseEntity.badRequest().body("Debe enviar al menos un parámetro de búsqueda");
+        return ResponseEntity.badRequest().body("Debe enviar al menos un parámetro");
     }
 
-    return ResponseEntity.ok(service.buscar(id, cliente, fecha));
+    List<OrdenesResponseDTO> resultado = service.buscar(id, cliente, fecha);
+
+    if (resultado.isEmpty()) {
+        return ResponseEntity.status(404)
+                .body("No se encontraron órdenes con los datos ingresados");
+    }
+
+    return ResponseEntity.ok(resultado);
 	}
 
 	// Creacion de orden de compra

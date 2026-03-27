@@ -27,6 +27,21 @@ public class OrdenesService {
         ordenes.add(OrdenesResponseDTO.builder().id("7").cliente("Diego Morales").producto("Cepillo deslanador para perro").cantidad(1).precio(15990.0).fecha("2026-03-24").estado("ENTREGADO").build());
         ordenes.add(OrdenesResponseDTO.builder().id("8").cliente("Camila Torres").producto("Spray desenredante para mascotas").cantidad(2).precio(8990.0).fecha("2026-03-24").estado("PENDIENTE").build());
 
+        ordenes.add(OrdenesResponseDTO.builder().id("9").cliente("Juan Pérez").producto("Cepillo para perro").cantidad(1).precio(7990.0).fecha("2026-03-25").estado("PENDIENTE").build());
+        ordenes.add(OrdenesResponseDTO.builder().id("10").cliente("María González").producto("Arena sanitaria perfumada").cantidad(2).precio(11990.0).fecha("2026-03-25").estado("ENVIADO").build());
+
+        ordenes.add(OrdenesResponseDTO.builder().id("11").cliente("Carlos Rojas").producto("Rascador para gato").cantidad(1).precio(19990.0).fecha("2026-03-26").estado("ENTREGADO").build());
+        ordenes.add(OrdenesResponseDTO.builder().id("12").cliente("Ana Soto").producto("Snacks dentales para perro").cantidad(3).precio(4990.0).fecha("2026-03-26").estado("PENDIENTE").build());
+
+        ordenes.add(OrdenesResponseDTO.builder().id("13").cliente("Pedro Martínez").producto("Correa ajustable para perro").cantidad(1).precio(10990.0).fecha("2026-03-27").estado("ENVIADO").build());
+        ordenes.add(OrdenesResponseDTO.builder().id("14").cliente("Lucía Fernández").producto("Juguete interactivo para gato").cantidad(2).precio(8990.0).fecha("2026-03-27").estado("PENDIENTE").build());
+
+        ordenes.add(OrdenesResponseDTO.builder().id("15").cliente("Diego Morales").producto("Shampoo antipulgas perro").cantidad(1).precio(12990.0).fecha("2026-03-28").estado("ENTREGADO").build());
+        ordenes.add(OrdenesResponseDTO.builder().id("16").cliente("Camila Torres").producto("Toallitas húmedas para mascotas").cantidad(4).precio(5990.0).fecha("2026-03-28").estado("PENDIENTE").build());
+
+        ordenes.add(OrdenesResponseDTO.builder().id("17").cliente("Juan Pérez").producto("Alimento premium para perro 3kg").cantidad(1).precio(18990.0).fecha("2026-03-29").estado("ENVIADO").build());
+        ordenes.add(OrdenesResponseDTO.builder().id("18").cliente("María González").producto("Fuente de agua para gato").cantidad(1).precio(24990.0).fecha("2026-03-29").estado("PENDIENTE").build());
+
 
     }
 
