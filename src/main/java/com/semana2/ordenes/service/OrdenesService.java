@@ -65,9 +65,64 @@ public class OrdenesService {
         return nuevaOrden;
     }
 
+    // public String consultaEstado(String id) {
 
+    //     for (OrdenesResponseDTO orden : ordenes) 
+    //      {
 
+    //          if (orden.getId().equals(id)) {
+    //              return String.format("El estado de la orden es: %s", orden.getEstado());
+                
+    //          }
+    //     }
 
+    //         return "El Id de orden no existe";
+    // }
 
-    
+    // public List<OrdenesResponseDTO> consultarOrdenFecha(String cliente, String fecha) {
+
+	// 	List<OrdenesResponseDTO> encontrado = new ArrayList<>();
+
+	// 	for (OrdenesResponseDTO orden : ordenes) {
+
+	// 		boolean clienteBuscado = orden.getCliente().equalsIgnoreCase(cliente);
+	// 		boolean fechaBuscada = orden.getFecha().equals(fecha);
+			
+
+	// 		if (clienteBuscado && fechaBuscada) {
+
+	// 			encontrado.add(orden);
+	// 		}
+	// 	}
+
+	// 	return encontrado;
+	// }
+    public List<OrdenesResponseDTO> buscar(String id, String cliente, String fecha) {
+
+    List<OrdenesResponseDTO> resultado = new ArrayList<>();
+
+    for (OrdenesResponseDTO orden : ordenes) {
+
+        boolean coincide = true;
+
+        if (id != null && !orden.getId().equals(id)) {
+            coincide = false;
+        }
+
+        if (cliente != null && !orden.getCliente().equalsIgnoreCase(cliente)) {
+            coincide = false;
+        }
+
+        if (fecha != null && !orden.getFecha().equals(fecha)) {
+            coincide = false;
+        }
+        
+
+        if (coincide) {
+            resultado.add(orden);
+        }
+    }
+
+    return resultado;
+}
 }

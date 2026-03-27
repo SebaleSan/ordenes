@@ -5,9 +5,6 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.semana2.ordenes.dto.OrdenesResponseDTO;
 import com.semana2.ordenes.service.OrdenesService;
 
-import jakarta.validation.Valid;
 
 
 @RestController
@@ -49,6 +45,32 @@ public class OrdenesController {
 
 		return ResponseEntity.ok(orden);
 	}
+
+//consulta de estado
+
+// 	@GetMapping("/estado")
+// 	public ResponseEntity<String> consultaEstado(@RequestParam String id) {
+
+// 		return ResponseEntity.ok(service.consultaEstado(id));
+// 	}
+
+
+// //consulta de estado por nombre cliente y fecha	
+// 	@GetMapping("/estadocliente")
+// 	public ResponseEntity<List<OrdenesResponseDTO>> consultarOrdenFecha(@RequestParam String cliente,
+// 			@RequestParam String fecha) {
+
+// 		return ResponseEntity.ok(service.consultarOrdenFecha(cliente, fecha));
+// 	}
+// 
+@GetMapping("/buscar")
+public ResponseEntity<List<OrdenesResponseDTO>> buscar(
+        @RequestParam(required = false) String id,
+        @RequestParam(required = false) String cliente,
+        @RequestParam(required = false) String fecha) {
+
+    return ResponseEntity.ok(service.buscar(id, cliente, fecha));
+}
 
 
     
