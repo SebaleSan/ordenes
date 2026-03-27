@@ -12,8 +12,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.semana2.ordenes.dto.OrdenesResponseDTO;
+import com.semana2.ordenes.service.OrdenesService;
+
 import jakarta.validation.Valid;
 
+
+@RestController
+@RequestMapping("/ordenes")
 public class OrdenesController {
+//inyeccion de dependencias
+    private final OrdenesService service;
+
+    public OrdenesController(OrdenesService service) {
+
+		this.service = service;
+	}
+//listar todas las ordenes
+
+    @GetMapping
+    public ResponseEntity<List<OrdenesResponseDTO>> obtenerTodas() {
+
+		return ResponseEntity.ok(service.obtenerTodas());
+	}
+//obtencion de orden por id
+
+    @GetMapping("/{id}")
+	public ResponseEntity<?> obtenerPorId(@PathVariable String id) {
+
+		OrdenesResponseDTO orden = service.obtenerPorId(id);
+
+		if (orden == null) {
+
+			return ResponseEntity.status(404).body("No se ha encontrado la orden con ID: " + id);
+		}
+
+		return ResponseEntity.ok(orden);
+	}
+
+
+    
     
 }

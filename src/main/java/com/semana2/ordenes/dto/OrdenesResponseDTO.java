@@ -14,9 +14,10 @@ public class OrdenesResponseDTO {
     private String id;
     private String cliente;
     private String producto;
-    private Integer cantidad;
+    private int cantidad;
     private Double precio;
     private String fecha;
     private String estado;
+
     
 }

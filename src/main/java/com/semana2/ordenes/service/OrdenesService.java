@@ -2,10 +2,72 @@ package com.semana2.ordenes.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import com.semana2.ordenes.dto.CrearOrdenRequestDTO;
+import com.semana2.ordenes.dto.OrdenesResponseDTO;
+
+@Service
 public class OrdenesService {
+
+    private final List<OrdenesResponseDTO> ordenes = new ArrayList<>();
+
+    public OrdenesService() {
+        
+        ordenes.add(OrdenesResponseDTO.builder().id("1").cliente("Juan Pérez").producto("Shampoo en seco para perro").cantidad(1).precio(8990.0).fecha("2026-03-20").estado("PENDIENTE").build());
+        ordenes.add(OrdenesResponseDTO.builder().id("2").cliente("María González").producto("Pipeta antipulgas gato").cantidad(2).precio(12990.0).fecha("2026-03-21").estado("ENVIADO").build());
+
+        ordenes.add(OrdenesResponseDTO.builder().id("3").cliente("Carlos Rojas").producto("Peine para gato pelo largo").cantidad(1).precio(5990.0).fecha("2026-03-22").estado("ENTREGADO").build());
+        ordenes.add(OrdenesResponseDTO.builder().id("4").cliente("Ana Soto").producto("Churu snack cuidado de pelo").cantidad(5).precio(3490.0).fecha("2026-03-22").estado("PENDIENTE").build());
+
+        ordenes.add(OrdenesResponseDTO.builder().id("5").cliente("Pedro Martínez").producto("Cortaúñas para perro").cantidad(1).precio(7990.0).fecha("2026-03-23").estado("ENVIADO").build());
+        ordenes.add(OrdenesResponseDTO.builder().id("6").cliente("Lucía Fernández").producto("Arena sanitaria para gato 10kg").cantidad(1).precio(10990.0).fecha("2026-03-23").estado("PENDIENTE").build());
+
+        ordenes.add(OrdenesResponseDTO.builder().id("7").cliente("Diego Morales").producto("Cepillo deslanador para perro").cantidad(1).precio(15990.0).fecha("2026-03-24").estado("ENTREGADO").build());
+        ordenes.add(OrdenesResponseDTO.builder().id("8").cliente("Camila Torres").producto("Spray desenredante para mascotas").cantidad(2).precio(8990.0).fecha("2026-03-24").estado("PENDIENTE").build());
+
+
+    }
+
+    public List<OrdenesResponseDTO> obtenerTodas() {
+
+		return ordenes;
+	}
+
+    public OrdenesResponseDTO obtenerPorId(String id) {
+
+		for (OrdenesResponseDTO orden : ordenes) {
+
+			if (orden.getId().equals(id)) {
+
+				return orden;
+			}
+		}
+		return null;
+	}
+
+    public OrdenesResponseDTO crear(CrearOrdenRequestDTO request) {
+
+       int nuevoId = ordenes.size() + 1;
+
+        OrdenesResponseDTO nuevaOrden = OrdenesResponseDTO.builder()
+            .id(String.valueOf(nuevoId))
+            .cliente(request.getCliente())
+            .producto(request.getProducto())
+            .cantidad(request.getCantidad())
+            .precio(request.getPrecio())
+            .fecha(request.getFecha())
+            .estado("PENDIENTE")
+            .build();
+
+        ordenes.add(nuevaOrden);
+        return nuevaOrden;
+    }
+
+
+
+
+
     
 }
