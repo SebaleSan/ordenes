@@ -16,6 +16,7 @@ import com.semana2.ordenes.service.OrdenesService;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -24,7 +25,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/ordenes")
 public class OrdenesController {
-//inyeccion de dependencias
+
+	//inyeccion de dependencias
     private final OrdenesService service;
 
     public OrdenesController(OrdenesService service) {
@@ -81,7 +83,7 @@ public class OrdenesController {
 
 //buscar una orden por el id, nombre, o fecha 	
 	@GetMapping("/buscar")
-public ResponseEntity<?> buscar(
+	public ResponseEntity<?> buscar(
         @RequestParam(required = false) String id,
         @RequestParam(required = false) String cliente,
         @RequestParam(required = false) String fecha) {
@@ -109,6 +111,36 @@ public ResponseEntity<?> buscar(
 		return ResponseEntity.ok(ingresa);
 
 	}
+
+	// @PutMapping("/{id}/actualizar")
+	// public ResponseEntity<?> actualizar(@PathVariable String id, @RequestParam String estado) {
+
+	// 	OrdenesResponseDTO ordenActualizar = service.actualizar(id, estado);
+
+	// 	if (ordenActualizar == null) {
+
+	// 		return ResponseEntity.status(404).body("No se encontró la reserva con id: " + id);
+	// 	}
+
+	// 	return ResponseEntity.ok(ordenActualizar);
+	// }
+	@PutMapping("/{id}/actualizar")
+	public ResponseEntity<?> actualizar(@PathVariable String id, @RequestParam String estado) {
+    try {
+        OrdenesResponseDTO ordenActualizar = service.actualizar(id, estado);
+
+        if (ordenActualizar == null) {
+            return ResponseEntity.status(404).body("No se encontró la reserva con id: " + id);
+        }
+
+        return ResponseEntity.ok(ordenActualizar);
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+}
+
+
+
 
 
 

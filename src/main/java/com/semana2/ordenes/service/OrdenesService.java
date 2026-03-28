@@ -139,5 +139,41 @@ public class OrdenesService {
     }
 
     return resultado;
+    }
+
+// Actualizar estado de un pedido por id
+//     public OrdenesResponseDTO actualizar(String id, String estado) {
+    
+//         for (OrdenesResponseDTO orden : ordenes) {
+//         if (!orden.getId().equals(id)) {
+            
+//             if (estado.equalsIgnoreCase("PENDIENTE") || estado.equalsIgnoreCase("ENVIADO") || estado.equalsIgnoreCase("ENTREGADO")) {
+//                 orden.setEstado(estado.toUpperCase());
+//                 return orden;
+//             }
+            
+            
+//         }
+//     }
+//             return null;
+// }
+
+    public OrdenesResponseDTO actualizar(String id, String estado) {
+    for (OrdenesResponseDTO orden : ordenes) {
+        if (orden.getId().equals(id)) {
+            if (estado.equalsIgnoreCase("PENDIENTE") || estado.equalsIgnoreCase("ENVIADO") || estado.equalsIgnoreCase("ENTREGADO")) {
+
+                orden.setEstado(estado.toUpperCase());
+                return orden;
+            } else {
+                // Estado inválido
+                throw new IllegalArgumentException("Estado no permitido: " + estado);
+            }
+        }
+    }
+    // Si no se encontró el id
+    return null;
 }
+
+
 }
