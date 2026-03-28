@@ -64,22 +64,7 @@ public class OrdenesController {
 	}
 
 
-// //consulta de estado por nombre cliente y fecha	
-// 	@GetMapping("/estadocliente")
-// 	public ResponseEntity<List<OrdenesResponseDTO>> consultarOrdenFecha(@RequestParam String cliente,
-// 			@RequestParam String fecha) {
 
-// 		return ResponseEntity.ok(service.consultarOrdenFecha(cliente, fecha));
-// 	}
-// 
-	// @GetMapping("/buscar")
-	// public ResponseEntity<List<OrdenesResponseDTO>> buscar(
-	// 		@RequestParam(required = false) String id,
-	// 		@RequestParam(required = false) String cliente,
-	// 		@RequestParam(required = false) String fecha) {
-
-	// 	return ResponseEntity.ok(service.buscar(id, cliente, fecha));
-	// }
 
 //buscar una orden por el id, nombre, o fecha 	
 	@GetMapping("/buscar")
@@ -112,18 +97,7 @@ public class OrdenesController {
 
 	}
 
-	// @PutMapping("/{id}/actualizar")
-	// public ResponseEntity<?> actualizar(@PathVariable String id, @RequestParam String estado) {
-
-	// 	OrdenesResponseDTO ordenActualizar = service.actualizar(id, estado);
-
-	// 	if (ordenActualizar == null) {
-
-	// 		return ResponseEntity.status(404).body("No se encontró la reserva con id: " + id);
-	// 	}
-
-	// 	return ResponseEntity.ok(ordenActualizar);
-	// }
+	
 	@PutMapping("/{id}/actualizar")
 	public ResponseEntity<?> actualizar(@PathVariable String id, @RequestParam String estado) {
     try {

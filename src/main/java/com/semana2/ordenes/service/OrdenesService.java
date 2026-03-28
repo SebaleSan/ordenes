@@ -94,24 +94,7 @@ public class OrdenesService {
             return "El Id de orden no existe";
     }
 
-    // public List<OrdenesResponseDTO> consultarOrdenFecha(String cliente, String fecha) {
-
-	// 	List<OrdenesResponseDTO> encontrado = new ArrayList<>();
-
-	// 	for (OrdenesResponseDTO orden : ordenes) {
-
-	// 		boolean clienteBuscado = orden.getCliente().equalsIgnoreCase(cliente);
-	// 		boolean fechaBuscada = orden.getFecha().equals(fecha);
-			
-
-	// 		if (clienteBuscado && fechaBuscada) {
-
-	// 			encontrado.add(orden);
-	// 		}
-	// 	}
-
-	// 	return encontrado;
-	// }
+   
     public List<OrdenesResponseDTO> buscar(String id, String cliente, String fecha) {
 
     List<OrdenesResponseDTO> resultado = new ArrayList<>();
@@ -141,23 +124,6 @@ public class OrdenesService {
     return resultado;
     }
 
-// Actualizar estado de un pedido por id
-//     public OrdenesResponseDTO actualizar(String id, String estado) {
-    
-//         for (OrdenesResponseDTO orden : ordenes) {
-//         if (!orden.getId().equals(id)) {
-            
-//             if (estado.equalsIgnoreCase("PENDIENTE") || estado.equalsIgnoreCase("ENVIADO") || estado.equalsIgnoreCase("ENTREGADO")) {
-//                 orden.setEstado(estado.toUpperCase());
-//                 return orden;
-//             }
-            
-            
-//         }
-//     }
-//             return null;
-// }
-
     public OrdenesResponseDTO actualizar(String id, String estado) {
     for (OrdenesResponseDTO orden : ordenes) {
         if (orden.getId().equals(id)) {
@@ -171,7 +137,7 @@ public class OrdenesService {
             }
         }
     }
-    // Si no se encontró el id
+
     return null;
 }
 
