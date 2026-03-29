@@ -12,11 +12,12 @@ import lombok.NoArgsConstructor;
 public class OrdenesResponseDTO {
 
     private String id;
+    private String rutCliente;
     private String cliente;
     private String producto;
     private int cantidad;
     private Double precio;
-    private String fecha;
+    private String fechaHora;
     private String estado;
 
     

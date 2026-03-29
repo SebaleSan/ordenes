@@ -26,10 +26,11 @@ public class IngresarOrdenRequestDTO {
     private Integer cantidad;
 
     @NotNull(message = "El precio es obligatorio")
-    @Min(value = 0, message = "El precio no puede ser negativo")
+    @Min(value = 0, message = "El precio no puede ser 0 ni negativo")
     private Double precio;
 
-    @NotBlank(message = "Se debe ingresar una fecha para la compra")
-    @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "Formato de fecha yyyy-MM-dd")
-    private String fecha;
+    @NotBlank(message = "El RUT del cliente es obligatorio")
+    @Pattern(regexp = "^\\d{1,2}\\.\\d{3}\\.\\d{3}-[0-9kK]$", message = "Formato de RUT inválido (Ej: 12.345.678-9)")
+    private String rutCliente;
+
 }
