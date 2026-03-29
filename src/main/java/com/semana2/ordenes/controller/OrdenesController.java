@@ -40,44 +40,25 @@ public class OrdenesController {
 
 		return ResponseEntity.ok(service.obtenerTodas());
 	}
-//obtencion de orden por id
-
-    @GetMapping("/{id}")
-	public ResponseEntity<?> obtenerPorId(@PathVariable String id) {
-
-		OrdenesResponseDTO orden = service.obtenerPorId(id);
-
-		if (orden == null) {
-
-			return ResponseEntity.status(404).body("No se ha encontrado la orden con ID: " + id);
-		}
-
-		return ResponseEntity.ok(orden);
-	}
-
-//consulta de estado
-
-	@GetMapping("/estado")
-	public ResponseEntity<String> consultaEstado(@RequestParam String id) {
-
-		return ResponseEntity.ok(service.consultaEstado(id));
-	}
 
 
 
 
-//buscar una orden por el id, nombre, o fecha 	
+
+
+//buscar una orden por el id, nombre, fecha, rut	
 	@GetMapping("/buscar")
 	public ResponseEntity<?> buscar(
         @RequestParam(required = false) String id,
         @RequestParam(required = false) String cliente,
-        @RequestParam(required = false) String fecha) {
+        @RequestParam(required = false) String fecha,
+		@RequestParam(required = false) String rutCliente) {
 
-    if (id == null && cliente == null && fecha == null) {
+    if (id == null && cliente == null && fecha == null && rutCliente == null) {
         return ResponseEntity.badRequest().body("Debe enviar al menos un parámetro");
     }
 
-    List<OrdenesResponseDTO> resultado = service.buscar(id, cliente, fecha);
+    List<OrdenesResponseDTO> resultado = service.buscar(id, cliente, fecha, rutCliente);
 
     if (resultado.isEmpty()) {
         return ResponseEntity.status(404)

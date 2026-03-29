@@ -70,18 +70,6 @@ public class OrdenesService {
 		return ordenes;
 	}
 
-    public OrdenesResponseDTO obtenerPorId(String id) {
-
-		for (OrdenesResponseDTO orden : ordenes) {
-
-			if (orden.getId().equals(id)) {
-
-				return orden;
-			}
-		}
-		return null;
-	}
-
     //Crear orden
     
     public OrdenesResponseDTO crear(IngresarOrdenRequestDTO request) {
@@ -148,51 +136,42 @@ public class OrdenesService {
     return nuevaOrden;
 }
 
-//consulta estado de orden
-
-    public String consultaEstado(String id) {
-
-        for (OrdenesResponseDTO orden : ordenes) 
-         {
-
-             if (orden.getId().equals(id)) {
-                 return String.format("El estado de la orden es: %s", orden.getEstado());
-                
-             }
-        }
-
-            return "El Id de orden no existe";
-    }
 
    
-    public List<OrdenesResponseDTO> buscar(String id, String cliente, String fecha) {
-
+    public List<OrdenesResponseDTO> buscar(String id, String cliente, String fecha, String rutCliente) {
     List<OrdenesResponseDTO> resultado = new ArrayList<>();
 
-    for (OrdenesResponseDTO orden : ordenes) {
+        for (OrdenesResponseDTO orden : ordenes) {
+            boolean coincide = true;
 
-        boolean coincide = true;
+            if (id != null && !orden.getId().equals(id)) {
+                coincide = false;
+            }
+            if (cliente != null && !orden.getCliente().equalsIgnoreCase(cliente)) {
+                coincide = false;
+            }
+            if (fecha != null) {
+                // Extraemos solo la fecha (YYYY-MM-DD) de fechaHora
+                String soloFecha = orden.getFechaHora().split("T")[0];
+                if (!soloFecha.equals(fecha)) {
+                    coincide = false;
+                }
+            }
+            if (rutCliente != null) {
+                if (orden.getRutCliente() == null || !orden.getRutCliente().equalsIgnoreCase(rutCliente)) {
+                    coincide = false;
+                }
+            }
 
-        if (id != null && !orden.getId().equals(id)) {
-            coincide = false;
+            if (coincide) {
+                resultado.add(orden);
+            }
         }
 
-        if (cliente != null && !orden.getCliente().equalsIgnoreCase(cliente)) {
-            coincide = false;
-        }
+        return resultado;
+}
 
-        if (fecha != null && !orden.getFechaHora().equals(fecha)) {
-            coincide = false;
-        }
-        
-
-        if (coincide) {
-            resultado.add(orden);
-        }
-    }
-
-    return resultado;
-    }
+  
 
     public OrdenesResponseDTO actualizar(String id, String estado) {
     for (OrdenesResponseDTO orden : ordenes) {
@@ -202,7 +181,7 @@ public class OrdenesService {
                 orden.setEstado(estado.toUpperCase());
                 return orden;
             } else {
-                // Estado inválido
+        
                 throw new IllegalArgumentException("Estado no permitido: " + estado);
             }
         }
