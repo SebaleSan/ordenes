@@ -93,6 +93,10 @@ public class OrdenesService {
         throw new RuntimeException("El precio no puede ser negativo");
     }
 
+    if (request.getPrecio() == null || request.getPrecio() <= 0) {
+    throw new RuntimeException("El precio del producto debe ser mayor a 0");
+    }
+
    
     LocalDateTime ahora = LocalDateTime.now();
 
