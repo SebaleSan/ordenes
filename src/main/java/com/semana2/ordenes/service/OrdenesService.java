@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.semana2.ordenes.dto.IngresarOrdenRequestDTO;
 import com.semana2.ordenes.dto.OrdenesResponseDTO;
+import com.semana2.ordenes.entity.ClienteEntity;
 import com.semana2.ordenes.entity.OrdenEntity;
 import com.semana2.ordenes.repository.ClienteRepository;
 import com.semana2.ordenes.repository.OrdenRepository;
@@ -59,15 +60,26 @@ public class OrdenesService {
     
     public OrdenesResponseDTO crear(IngresarOrdenRequestDTO request) {
         
-        // 1. Buscar cliente por RUT
+        // 1. Guardar o recuperar cliente por RUT
         var clientes = clienteRepository.findByRutCliente(request.getRutCliente());
+        ClienteEntity cliente;
         if (clientes.isEmpty()) {
-            throw new RuntimeException("Cliente no encontrado con RUT: " + request.getRutCliente());
+            cliente = new ClienteEntity();
+            cliente.setRutCliente(request.getRutCliente());
+            cliente.setNombre(request.getNombreCliente());
+            cliente.setApellido(request.getApellidoCliente());
+            cliente.setCorreo(request.getCorreoCliente());
+        } else {
+            cliente = clientes.get(0);
         }
-        var cliente = clientes.get(0);
-        
-        // 2. Buscar producto por nombre
-        var productos = productoRepository.findByNombreProducto(request.getProducto());
+        cliente = clienteRepository.save(cliente);
+
+        // 2. Buscar producto por nombre (case-insensitive)
+        String nombreProducto = request.getProducto().trim();
+        var productos = productoRepository.findByNombreProductoIgnoreCase(nombreProducto);
+        if (productos.isEmpty()) {
+            productos = productoRepository.findByNombreProductoContainingIgnoreCase(nombreProducto);
+        }
         if (productos.isEmpty()) {
             throw new RuntimeException("Producto no encontrado: " + request.getProducto());
         }
