@@ -38,6 +38,12 @@ public class OrdenEntity {
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
 
+    @Column(name = "direccion", nullable = false)
+    private String direccion;
+
+    @Column(name = "precio_total", nullable = false)
+    private Double precioTotal;
+
     @Column(name = "estado", nullable = false)
     private String estado;
 
