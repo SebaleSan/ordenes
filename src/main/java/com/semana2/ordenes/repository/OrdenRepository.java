@@ -22,7 +22,9 @@ public interface OrdenRepository extends JpaRepository<OrdenEntity, Long> {
     List<OrdenEntity> findByFechaOrden(@Param("fechaOrden") LocalDateTime fechaOrden);
 
     List<OrdenEntity> findByClienteAndFechaOrden(ClienteEntity cliente, LocalDateTime fechaOrden);
-  
+    
+    @Query("SELECT o FROM OrdenEntity o WHERE o.cliente = :cliente AND o.producto = :producto AND o.fechaOrden > :fechaOrden")
+    List<OrdenEntity> findByClienteAndProductoAndFechaOrdenAfter(@Param("cliente") ClienteEntity cliente, @Param("producto") com.semana2.ordenes.entity.ProductoEntity producto, @Param("fechaOrden") LocalDateTime fechaOrden);
 
 
 

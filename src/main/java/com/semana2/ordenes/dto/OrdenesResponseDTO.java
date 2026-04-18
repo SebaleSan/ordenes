@@ -13,11 +13,11 @@ public class OrdenesResponseDTO {
 
     private String id;
     private String rutCliente;
-    private String cliente;
-    private String producto;
+    private String nombreProducto;
     private int cantidad;
-    private Double precio;
-    private String fechaHora;
+    private Double precioProducto;
+    private Double valorTotal;
+    private String direccion;
     private String estado;
 
     
