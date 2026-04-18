@@ -16,7 +16,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "paciente")
+@Table(name = "orden")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,8 +42,8 @@ public class OrdenEntity {
     private String estado;
 
     @ManyToOne
-    @JoinColumn(name = "id_comprador", nullable = false)
-    private ClienteEntity comprador;
+    @JoinColumn(name = "id_cliente", nullable = false)
+    private ClienteEntity cliente;
 
     @ManyToOne
     @JoinColumn(name = "id_producto", nullable = false)
