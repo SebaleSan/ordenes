@@ -85,7 +85,7 @@ public class OrdenesController {
         OrdenesResponseDTO ordenActualizar = service.actualizar(id, estado);
 
         if (ordenActualizar == null) {
-            return ResponseEntity.status(404).body("No se encontró la reserva con id: " + id);
+            return ResponseEntity.status(404).body("No se encontró la orden con id: " + id);
         }
 
         return ResponseEntity.ok(ordenActualizar);
