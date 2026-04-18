@@ -43,7 +43,7 @@ public class OrdenEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_comprador", nullable = false)
-    private UsuarioEntity comprador;
+    private ClienteEntity comprador;
 
     @ManyToOne
     @JoinColumn(name = "id_producto", nullable = false)

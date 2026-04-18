@@ -12,34 +12,34 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "comprador")
+@Table(name = "cliente")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 
 
 
-public class UsuarioEntity {
+public class ClienteEntity {
 
     @Id
-    @Column(name = "id_comprador", nullable = false)
+    @Column(name = "id_cliente", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idComprador;
+    private Long idCliente;
 
-    @Column(name = "rut", nullable = false, unique = true)
-    private String rut;
+    @Column(name = "rut_cliente", nullable = false, unique = true)
+    private String rutCliente;
 
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre_cliente", nullable = false)
     private String nombre;
 
-    @Column(name = "apellido", nullable = false)
+    @Column(name = "apellido_cliente", nullable = false)
     private String apellido;
 
-    @Column(name = "correo", nullable = false, unique = true)
+    @Column(name = "correo_cliente", nullable = false, unique = true)
     private String correo;
 
 
-    @OneToMany(mappedBy = "comprador")
+    @OneToMany(mappedBy = "cliente")
     private java.util.List<OrdenEntity> ordenes;
     
 
