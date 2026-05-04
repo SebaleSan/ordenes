@@ -123,7 +123,7 @@ public class OrdenesService {
         for (OrdenEntity orden : ordenes) {
             boolean coincide = true;
 
-            if (id != null && !String.valueOf(orden.getIdOrden()).equals(id)) {
+            if (id != null && !Long.valueOf(orden.getIdOrden()).equals(id)) {
                 coincide = false;
             }
             if (cliente != null && !orden.getCliente().getNombre().equalsIgnoreCase(cliente)) {
