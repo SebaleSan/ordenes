@@ -35,7 +35,7 @@ public class OrdenesService {
 
     private OrdenesResponseDTO toDTO(OrdenEntity orden) {
         return OrdenesResponseDTO.builder()
-                .id(String.valueOf(orden.getIdOrden()))
+                .id(Long.valueOf(orden.getIdOrden()))
                 .rutCliente(orden.getCliente().getRutCliente())
                 .nombreProducto(orden.getProducto().getNombreProducto())
                 .cantidad(orden.getCantidad())

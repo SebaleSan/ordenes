@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class OrdenesResponseDTO {
 
-    private String id;
+    private Long id;
     private String rutCliente;
     private String nombreProducto;
     private int cantidad;
