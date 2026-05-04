@@ -9,7 +9,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -144,7 +143,7 @@ class OrdenesServiceTest{
     when(ordenRepository.save(any(OrdenEntity.class))).thenReturn(ordenEntity);
 
     
-    OrdenesResponseDTO resultado = ordenesService.actualizar("1", "ENVIADO");
+    OrdenesResponseDTO resultado = ordenesService.actualizar(1L, "ENVIADO");
 
     
     assertNotNull(resultado);
@@ -165,7 +164,7 @@ class OrdenesServiceTest{
             when(ordenRepository.findById(1L)).thenReturn(Optional.of(ordenEntity));
 
                 assertThrows(IllegalArgumentException.class,
-                    () -> ordenesService.actualizar("1", "CANCELADO"));
+                    () -> ordenesService.actualizar(1L, "CANCELADO"));
 
                 }
 
@@ -176,7 +175,7 @@ class OrdenesServiceTest{
     void actualizarOrdenNoEncontrada() {
         when(ordenRepository.findById(99L)).thenReturn(Optional.empty());
 
-        OrdenesResponseDTO resultado = ordenesService.actualizar("99", "ENVIADO");
+        OrdenesResponseDTO resultado = ordenesService.actualizar(99L, "ENVIADO");
 
         assertNull(resultado);
     }

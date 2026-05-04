@@ -116,7 +116,7 @@ public class OrdenesService {
 
 
    
-    public List<OrdenesResponseDTO> buscar(String id, String cliente, String fecha, String rutCliente) {
+    public List<OrdenesResponseDTO> buscar(Long id, String cliente, String fecha, String rutCliente) {
         List<OrdenEntity> ordenes = ordenRepository.findAll();
         List<OrdenesResponseDTO> resultado = new ArrayList<>();
 
@@ -152,7 +152,7 @@ public class OrdenesService {
 
   
 
-    public OrdenesResponseDTO actualizar(String id, String estado) {
+    public OrdenesResponseDTO actualizar(Long id, String estado) {
         // Buscar la orden por ID
         Optional<OrdenEntity> ordenOptional = ordenRepository.findById(Long.valueOf(id));
 

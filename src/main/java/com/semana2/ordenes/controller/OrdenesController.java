@@ -2,6 +2,10 @@ package com.semana2.ordenes.controller;
 
 import java.util.List;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,13 +37,20 @@ public class OrdenesController {
 
 		this.service = service;
 	}
-//listar todas las ordenes
+
 
     @GetMapping
-    public ResponseEntity<List<OrdenesResponseDTO>> obtenerTodas() {
+    public ResponseEntity<CollectionModel<OrdenesResponseDTO>> obtenerTodas() {
+    List<OrdenesResponseDTO> ordenes = service.obtenerTodas();
+    ordenes.forEach(this::agregarLinks);
 
-		return ResponseEntity.ok(service.obtenerTodas());
-	}
+    CollectionModel<OrdenesResponseDTO> collectionModel = CollectionModel.of(ordenes);
+    collectionModel.add(linkTo(methodOn(OrdenesController.class).obtenerTodas()).withSelfRel());
+    collectionModel.add(linkTo(methodOn(OrdenesController.class).ingresaOrden(null)).withRel("crear"));
+    collectionModel.add(linkTo(methodOn(OrdenesController.class).buscar(null, null, null, null)).withRel("buscar"));
+
+    return ResponseEntity.ok(collectionModel);
+    }
 
 
 
@@ -49,7 +60,7 @@ public class OrdenesController {
 //buscar una orden por el id, nombre, fecha, rut	
 	@GetMapping("/buscar")
 	public ResponseEntity<?> buscar(
-        @RequestParam(required = false) String id,
+        @RequestParam(required = false) Long id,
         @RequestParam(required = false) String cliente,
         @RequestParam(required = false) String fecha,
 		@RequestParam(required = false) String rutCliente) {
@@ -65,7 +76,15 @@ public class OrdenesController {
                 .body("No se encontraron órdenes con los datos ingresados");
     }
 
-    return ResponseEntity.ok(resultado);
+    resultado.forEach(this::agregarLinks);
+
+
+    CollectionModel<OrdenesResponseDTO> collectionModel = CollectionModel.of(resultado);
+    collectionModel.add(linkTo(methodOn(OrdenesController.class).obtenerTodas()).withRel("ordenes"));
+    collectionModel.add(linkTo(methodOn(OrdenesController.class).ingresaOrden(null)).withRel("crear"));
+    collectionModel.add(linkTo(methodOn(OrdenesController.class).buscar(id, cliente, fecha, rutCliente)).withSelfRel());
+
+    return ResponseEntity.ok(collectionModel);
 	}
 
 	// Creacion de orden de compra
@@ -80,7 +99,7 @@ public class OrdenesController {
 
 	
 	@PutMapping("/{id}/actualizar")
-	public ResponseEntity<?> actualizar(@PathVariable String id, @RequestParam String estado) {
+	public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestParam String estado) {
     try {
         OrdenesResponseDTO ordenActualizar = service.actualizar(id, estado);
 
@@ -93,6 +112,35 @@ public class OrdenesController {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 }
+
+
+
+    private void agregarLinks(OrdenesResponseDTO orden) {
+   
+
+    
+    orden.add(linkTo(methodOn(OrdenesController.class)
+        .obtenerTodas())
+        .withRel("ordenes"));
+
+    
+    orden.add(linkTo(methodOn(OrdenesController.class)
+        .buscar(null, null, null, orden.getRutCliente()))
+        .withRel("buscar"));
+
+    
+    orden.add(linkTo(methodOn(OrdenesController.class)
+        .ingresaOrden(null)) // null porque solo importa la firma
+        .withRel("crear"));
+
+    
+    orden.add(linkTo(methodOn(OrdenesController.class)
+        .actualizar(orden.getId(), "ENVIADO"))
+        .withRel("actualizar"));
+
+
+    }
+
 
 
 
