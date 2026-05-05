@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -95,6 +96,15 @@ class OrdenesServiceTest{
     }
 
 
+    @AfterEach
+    void tearDown() {
+        clienteEntity = null;
+        productoEntity = null;
+        ordenEntity = null;
+        ingresarOrdenRequestDTO = null;
+    }
+
+
     @Test
     @DisplayName("Deberia crar una orden")
         void crearOrden() {
@@ -122,6 +132,23 @@ class OrdenesServiceTest{
     void buscarOrden() {
         when(ordenRepository.findAll()).thenReturn(List.of(ordenEntity));
         List<OrdenesResponseDTO> resultado = ordenesService.buscar(null, null, null, null);
+          assertEquals(1, resultado.size());
+          assertEquals(1L, resultado.get(0).getId());
+          assertEquals("12345678-9", resultado.get(0).getRutCliente());
+          assertEquals("Producto 1", resultado.get(0).getNombreProducto());
+          assertEquals(2, resultado.get(0).getCantidad());
+          assertEquals(50.0, resultado.get(0).getPrecioProducto());
+          assertEquals(100.0, resultado.get(0).getValorTotal());
+          assertEquals("Calle Falsa 123", resultado.get(0).getDireccion());
+          assertEquals("PENDIENTE", resultado.get(0).getEstado());
+    }
+
+
+    @Test
+    @DisplayName("Deberia obtener todas las ordenes")
+    void obtenerTodasLasOrdenes() {
+        when(ordenRepository.findAll()).thenReturn(List.of(ordenEntity));
+        List<OrdenesResponseDTO> resultado = ordenesService.obtenerTodas();
           assertEquals(1, resultado.size());
           assertEquals(1L, resultado.get(0).getId());
           assertEquals("12345678-9", resultado.get(0).getRutCliente());
