@@ -133,6 +133,50 @@ class OrdenesServiceTest{
     }
 
 
+    @Test
+@DisplayName("Debería filtrar ordenes por id, cliente, fecha y rutCliente")
+void deberiaFiltrarOrdenesCorrectamente() {
+    ClienteEntity cliente = new ClienteEntity();
+    cliente.setRutCliente("12345678-9");
+    cliente.setNombre("Juan");
+
+    ProductoEntity producto = new ProductoEntity();
+    producto.setNombreProducto("Producto 1");
+    producto.setPrecio(50.0);
+
+    OrdenEntity orden = new OrdenEntity();
+    orden.setIdOrden(1L);
+    orden.setFechaOrden(LocalDateTime.of(2026, 4, 1, 10, 15));
+    orden.setCantidad(2);
+    orden.setDireccion("Calle Falsa 123");
+    orden.setPrecioTotal(100.0);
+    orden.setEstado("Pendiente");
+    orden.setCliente(cliente);
+    orden.setProducto(producto);
+
+    when(ordenRepository.findAll()).thenReturn(List.of(orden));
+
+    List<OrdenesResponseDTO> resultado = ordenesService.buscar(
+            1L,
+            "Juan",
+            "2026-04-01",
+            "12345678-9"
+    );
+
+    assertEquals(1, resultado.size());
+    OrdenesResponseDTO dto = resultado.get(0);
+    assertEquals(1L, dto.getId());
+    assertEquals("12345678-9", dto.getRutCliente());
+    assertEquals("Producto 1", dto.getNombreProducto());
+    assertEquals(2, dto.getCantidad());
+    assertEquals(50.0, dto.getPrecioProducto());
+    assertEquals(100.0, dto.getValorTotal());
+    assertEquals("Calle Falsa 123", dto.getDireccion());
+    assertEquals("Pendiente", dto.getEstado());
+}
+
+
+
 
     @Test
     @DisplayName("Deberia actualizar orden")
@@ -179,6 +223,9 @@ class OrdenesServiceTest{
 
         assertNull(resultado);
     }
+
+
+
 
 
 
