@@ -141,6 +141,7 @@ class OrdenesServiceTest{
           assertEquals(100.0, resultado.get(0).getValorTotal());
           assertEquals("Calle Falsa 123", resultado.get(0).getDireccion());
           assertEquals("PENDIENTE", resultado.get(0).getEstado());
+          verify(ordenRepository, times(1)).findAll();
     }
 
 
@@ -158,6 +159,7 @@ class OrdenesServiceTest{
           assertEquals(100.0, resultado.get(0).getValorTotal());
           assertEquals("Calle Falsa 123", resultado.get(0).getDireccion());
           assertEquals("PENDIENTE", resultado.get(0).getEstado());
+          verify(ordenRepository, times(1)).findAll();
     }
 
 
@@ -201,6 +203,7 @@ class OrdenesServiceTest{
         assertEquals(100.0, dto.getValorTotal());
         assertEquals("Calle Falsa 123", dto.getDireccion());
         assertEquals("Pendiente", dto.getEstado());
+        verify(ordenRepository, times(1)).findAll();
     }
 
 
@@ -268,7 +271,7 @@ class OrdenesServiceTest{
 
 
     @Test
-    @DisplayName("Debería devolver null si la orden no existe")
+    @DisplayName("Debería devolver null si la orden no existe al actualizar")
     void actualizarOrdenNoEncontrada() {
         when(ordenRepository.findById(99L)).thenReturn(Optional.empty());
 
